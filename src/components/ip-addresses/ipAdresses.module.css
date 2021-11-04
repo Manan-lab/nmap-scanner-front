@@ -1,0 +1,9 @@
+.tableHead{
+    color: white;
+    background-color: #867979;
+}
+
+.icon{
+    margin-left: 10px;
+    cursor: pointer;
+}

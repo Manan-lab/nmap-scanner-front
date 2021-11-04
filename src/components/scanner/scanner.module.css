@@ -1,0 +1,8 @@
+.tableHead{
+    color: white;
+    background-color: #2a416f;
+}
+
+tbody tr{
+    cursor: pointer;
+}

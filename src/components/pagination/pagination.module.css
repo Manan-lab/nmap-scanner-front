@@ -1,0 +1,8 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+}
+
+ul li a{
+    color: #2a416f!important;
+}
