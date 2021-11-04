@@ -1,8 +1,8 @@
 import React from 'react';
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import styles from "./ip-addresses/ipAdresses.module.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import styles from './ip-addresses/ipAdresses.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 function SetTooltip(propsForText) {
   return (
