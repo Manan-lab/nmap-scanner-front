@@ -27,34 +27,34 @@ function OpenPorts(props) {
   let num = 1;
   
   return (
-      <Table bordered hover>
-          <thead className={styles.tableHead}>
-              <tr>
-                  <th>#</th>
-                  <th>Port</th>
-                  <th>Method</th>
-                  <th>Protocol</th>
-                  <th>Service</th>
-              </tr>
-          </thead>
-          <tbody>
-              {
-                  portsData && (
-                      portsData.map((item,i) => {
-                          return [
-                              <tr key={i}>
-                                <td>{num++}</td>
-                                <td>{item.port_port}</td>
-                                <td>{item.port_method}</td>
-                                <td>{item.port_protocol}</td>
-                                <td>{item.port_service}</td>
-                              </tr>
-                          ]
-                      })
-                  )
-              }
-          </tbody>
-      </Table>
+     <Table bordered hover>
+        <thead className={styles.tableHead}>
+           <tr>
+              <th>#</th>
+              <th>Port</th>
+              <th>Method</th>
+              <th>Protocol</th>
+              <th>Service</th>
+           </tr>
+        </thead>
+        <tbody>
+           {
+              portsData && (
+                 portsData.map((item,i) => {
+                    return [
+                       <tr key={i}>
+                          <td>{num++}</td>
+                          <td>{item.port_port}</td>
+                          <td>{item.port_method}</td>
+                          <td>{item.port_protocol}</td>
+                          <td>{item.port_service}</td>
+                       </tr>
+                    ]
+                 })
+              )
+           }
+        </tbody>
+     </Table>
   )
 }
 
