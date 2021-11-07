@@ -6,25 +6,25 @@ import styles from './ip-addresses/ipAdresses.module.css';
 
 function InfoTooltip(tooltipProps) {
   return (
-          <OverlayTrigger
-             placement="bottom"
-             overlay={
-                (props) => (
-                   <Tooltip
-                      {...props}
-                      id="button-tooltip"
-                   >
-                      <strong>
-                        {tooltipProps.text}
-                      </strong>
-                   </Tooltip>
-                )
-             }
-          >
-              <span className={styles.icon}>
-                 <FontAwesomeIcon icon={faQuestionCircle} />
-              </span>
-          </OverlayTrigger>
+     <OverlayTrigger
+        placement="bottom"
+        overlay={
+           (props) => (
+              <Tooltip
+                 {...props}
+                 id="button-tooltip"
+              >
+                 <strong>
+                    {tooltipProps.text}
+                 </strong>
+              </Tooltip>
+           )
+        }
+     >
+        <span className={styles.icon}>
+           <FontAwesomeIcon icon={faQuestionCircle} />
+        </span>
+     </OverlayTrigger>
   )
 }
 
