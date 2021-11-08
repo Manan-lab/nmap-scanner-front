@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import queryString from 'query-string';
 import styles from './scanner.module.css';
 import PaginationContainer from '../pagination/Pagination';
+import Loading from "../loading/Loading";
 
 const API_URL = process.env.REACT_APP_API_HOST;
 
@@ -14,12 +15,14 @@ function Scanner(props) {
           +queryString.parse(window.location.search).page || 1
   );
   const [ scansData, setScansData ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
   const [ pageCount, setPageCount ] = useState(0);
   const [ locationKeys, setLocationKeys ] = useState([]);
   const history = useHistory();
   
   useEffect(() => {
      getScans(currentPage);
+     setLoading(true);
   },[currentPage]);
   
   useEffect(() => {
@@ -60,6 +63,9 @@ function Scanner(props) {
      .catch(function (error) {
         console.log(error);
      })
+     .finally(()=>{
+       setLoading(false);
+     })
   }
   
   const onPageChange = (newPage) => {
@@ -76,53 +82,59 @@ function Scanner(props) {
   
   return (
      <>
-        <Table bordered hover>
-           <thead className={styles.tableHead}>
-              <tr>
-                 <th>#</th>
-                 <th>Range</th>
-                 <th>Status</th>
-                 <th>Period</th>
-                 <th>Created_at</th>
-              </tr>
-           </thead>
-           <tbody>
+        { loading ? <Loading/> :
+           <>
+              <Table bordered hover>
+                 <thead className={styles.tableHead}>
+                    <tr>
+                       <th>#</th>
+                       <th>Range</th>
+                       <th>Status</th>
+                       <th>Period</th>
+                       <th>Created_at</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    {
+                       scansData && (
+                          scansData.map((item, i) => {
+                          
+                             return [
+                                <tr key={item.uuid}
+                                     onClick={() => {
+                                       goToIpAdresses(item.uuid)
+                                     }}
+                                >
+                                   <td>{num++}</td>
+                                   <td>
+                                     {item.range}
+                                   </td>
+                                   <td>
+                                     {item.status}
+                                   </td>
+                                   <td>
+                                     {item.period}
+                                   </td>
+                                   <td>
+                                     {item.created_at}
+                                   </td>
+                                </tr>
+                             ]
+                          })
+                       )
+                    }
+                 </tbody>
+              </Table>
               {
-                 scansData && (
-                    scansData.map((item, i) => {
-                            
-                       return [
-                          <tr key={item.uuid}
-                              onClick={() => { goToIpAdresses(item.uuid) }}
-                          >
-                             <td>{num++}</td>
-                             <td>
-                                {item.range}
-                             </td>
-                             <td>
-                                {item.status}
-                             </td>
-                             <td>
-                                {item.period}
-                             </td>
-                             <td>
-                                {item.created_at}
-                             </td>
-                          </tr>
-                       ]
-                    })
+                 pageCount > 1 && (
+                    <PaginationContainer
+                       currentPage={currentPage}
+                       onPageChange={onPageChange}
+                       pageCount={pageCount}
+                    />
                  )
               }
-           </tbody>
-        </Table>
-        {
-           pageCount > 1 && (
-              <PaginationContainer
-                  currentPage = { currentPage }
-                  onPageChange = { onPageChange }
-                  pageCount = { pageCount }
-              />
-           )
+           </>
         }
      </>
   )
