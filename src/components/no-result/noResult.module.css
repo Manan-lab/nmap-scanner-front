@@ -1,0 +1,13 @@
+.notResultContainer{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+p{
+    margin: 0;
+    padding-left: 10px;
+}
+

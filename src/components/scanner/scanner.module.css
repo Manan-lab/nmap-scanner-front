@@ -6,3 +6,42 @@
 tbody tr{
     cursor: pointer;
 }
+
+.errorContainer{
+    min-height: 90vh;
+
+    /*margin-top: 100px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: red;
+}
+
+p{
+    margin: 0;
+}
+
+@media (max-width: 500px) {
+    tbody tr{
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 450px) {
+    tbody tr{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px) {
+    tbody tr{
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 350px) {
+    tbody tr{
+        font-size: 8px;
+    }
+}

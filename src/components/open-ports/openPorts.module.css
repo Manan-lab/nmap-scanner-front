@@ -2,3 +2,17 @@
     color: white;
     background-color: #867979;
 }
+
+.errorContainer{
+    min-height: 90vh;
+    /*margin-top: 100px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: red;
+}
+
+p{
+    margin: 0;
+}

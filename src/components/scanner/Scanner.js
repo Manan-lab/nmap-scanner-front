@@ -4,9 +4,12 @@ import axios from 'axios';
 import { withRouter } from 'react-router';
 import { useHistory } from 'react-router-dom'
 import queryString from 'query-string';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import styles from './scanner.module.css';
 import PaginationContainer from '../pagination/Pagination';
 import Loading from "../loading/Loading";
+import NoResult from "../no-result/NoResult";
 
 const API_URL = process.env.REACT_APP_API_HOST;
 
@@ -17,6 +20,7 @@ function Scanner(props) {
   const [ scansData, setScansData ] = useState([]);
   const [ loading, setLoading ] = useState(true);
   const [ pageCount, setPageCount ] = useState(0);
+  const [ errorMessage, setErrorMessage ] = useState('');
   const [ locationKeys, setLocationKeys ] = useState([]);
   const history = useHistory();
   
@@ -60,8 +64,8 @@ function Scanner(props) {
         setPageCount(response.data.pageCount);
         setCurrentPage(response.data.page);
      })
-     .catch(function (error) {
-        console.log(error);
+     .catch((error) => {
+        setErrorMessage(error.message);
      })
      .finally(()=>{
        setLoading(false);
@@ -80,30 +84,45 @@ function Scanner(props) {
   
   let num = 1;
   
-  return (
-     <>
-        { loading ? <Loading/> :
-           <>
-              <Table bordered hover>
-                 <thead className={styles.tableHead}>
-                    <tr>
-                       <th>#</th>
-                       <th>Range</th>
-                       <th>Status</th>
-                       <th>Period</th>
-                       <th>Created_at</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    {
-                       scansData && (
+  if (loading) {
+    
+     return (
+        <Loading/>
+     )
+  } else if (errorMessage) {
+    
+     return(
+        <div className={styles.errorContainer}>
+           <FontAwesomeIcon icon={faExclamationTriangle} />
+           <p>{errorMessage}</p>
+        </div>
+     )
+  } else {
+    
+     return (
+        <>
+           { !scansData || scansData.length === 0 ?
+              <NoResult />
+              :
+              <>
+                 <Table bordered hover>
+                    <thead className={styles.tableHead}>
+                       <tr>
+                          <th>#</th>
+                          <th>Range</th>
+                          <th>Status</th>
+                          <th>Period</th>
+                          <th>Created_at</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       {
                           scansData.map((item, i) => {
-                          
                              return [
                                 <tr key={item.uuid}
-                                     onClick={() => {
-                                       goToIpAdresses(item.uuid)
-                                     }}
+                                   onClick={() => {
+                                      goToIpAdresses(item.uuid)
+                                   }}
                                 >
                                    <td>{num++}</td>
                                    <td>
@@ -121,23 +140,23 @@ function Scanner(props) {
                                 </tr>
                              ]
                           })
-                       )
-                    }
-                 </tbody>
-              </Table>
-              {
-                 pageCount > 1 && (
-                    <PaginationContainer
-                       currentPage={currentPage}
-                       onPageChange={onPageChange}
-                       pageCount={pageCount}
-                    />
-                 )
-              }
-           </>
-        }
-     </>
-  )
+                       }
+                    </tbody>
+                 </Table>
+                 {
+                    pageCount > 1 && (
+                       <PaginationContainer
+                          currentPage={currentPage}
+                          onPageChange={onPageChange}
+                          pageCount={pageCount}
+                       />
+                    )
+                 }
+              </>
+           }
+        </>
+     )
+  }
 }
 
 export default withRouter(Scanner);
